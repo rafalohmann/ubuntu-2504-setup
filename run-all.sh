@@ -8,12 +8,12 @@ if [ "$(id -u)" -ne 0 ]; then
 fi
 
 # Check if this is Ubuntu 25.04
-# if ! grep -q "25.04" /etc/os-release; then
-#     echo "This script is intended for Ubuntu 25.04 only."
-#     exit 1
-# fi
+if ! grep -q "25.04" /etc/os-release; then
+    echo "This script is intended for Ubuntu 25.04 only."
+    exit 1
+fi
 
-
+# Main setup
 echo "[*] Running system main setup..."
 bash scripts/main.sh
 
@@ -34,6 +34,10 @@ bash scripts/install-nvm-node.sh
 
 echo "[*] Installing Pyenv and LTS Python..."
 bash scripts/install-pyenv-python.sh
+
+# Shell & terminal environment
+echo "[*] Installing Zsh and Oh My Zsh..."
+bash scripts/install-zsh-and-oh-my-zsh.sh
 
 # Browsers
 echo "[*] Installing Chrome..."

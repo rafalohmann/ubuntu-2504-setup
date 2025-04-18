@@ -11,7 +11,7 @@ The setup includes:
 - Git (with default configs)
 - NVM (with LTS Node.js)
 - Pyenv (with latest LTS Python)
-- APT-based Firefox (Snap-free)
+- Zsh with Oh My Zsh, Starship, and helpful aliases
 - Google Chrome
 - VSCodium (open-source VS Code)
 - GitKraken (Git GUI)
@@ -21,13 +21,14 @@ The setup includes:
 - GIMP (image editor)
 - VLC media player
 - qBittorrent (torrent client)
+- GNOME tweaks for power users (Flatpak, Dock, battery % etc.)
 
 ## Usage
 
 1. Clone this repository:
 
 ```bash
-git clone https://github.com/your-username/ubuntu-2504-setup.git
+git clone https://github.com/rafalohmann/ubuntu-2504-setup.git
 cd ubuntu-2504-setup
 ```
 
@@ -40,15 +41,83 @@ chmod +x run-all.sh
 3. Run the setup:
 
 ```bash
-./run-all.sh
+sudo ./run-all.sh
 ```
 
 Each script in the `scripts/` folder can also be executed individually.
 
+## Zsh Post-Installation Setup
+
+After running `install-zsh-and-oh-my-zsh.sh`, follow these steps:
+
+### Enable useful plugins
+
+Edit your `~/.zshrc` and replace:
+
+```zsh
+plugins=(git)
+```
+
+With:
+
+```zsh
+plugins=(
+  git
+  zsh-completions
+  zsh-autosuggestions
+  zsh-syntax-highlighting
+)
+```
+
+### Add aliases, pyenv, nvm, and starship setup
+
+At the end of your `~/.zshrc`, add:
+
+```zsh
+# Aliases
+
+alias zshconfig="nano ~/.zshrc"
+alias zshsource="source ~/.zshrc"
+
+alias sshhome="cd ~/.ssh"
+alias sshconfig="nano ~/.ssh/config"
+
+alias gitconfig="nano ~/.gitconfig"
+
+alias gits="git status"
+alias gitd="git diff"
+alias gitl="git lg"
+alias gita="git add ."
+alias gitc="git commit"
+
+alias ni="rm -rf node_modules package-lock.json && npm install"
+
+# pyenv
+export PYENV_ROOT="$HOME/.pyenv"
+export PATH="$PYENV_ROOT/bin:$PATH"
+eval "$(pyenv init - zsh)"
+
+# nvm
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
+
+# starship
+eval "$(starship init zsh)"
+```
+
+### Final Step
+
+Apply your changes:
+
+```bash
+source ~/.zshrc
+```
+
+You're all set! 🎉 Enjoy your customized Zsh experience.
+
 ## Notes
 
 - This setup is tailored specifically for Ubuntu 25.04.
-- Firefox is installed using the APT method, replacing the Snap version.
 - Node.js and Python are installed via `nvm` and `pyenv`, ensuring version flexibility and isolation.
 
 ## License
